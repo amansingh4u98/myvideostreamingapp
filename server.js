@@ -12,6 +12,8 @@ const path = require("path")
 const cors = require("cors")
 const fs = require("fs")
 
+const dburlserver = "mongodb+srv://dhanupandey:test12345@cluster0.s2usivc.mongodb.net/?retryWrites=true&w=majority"
+
 const corsOptions ={
 
   exposedHeaders:"Authorization",
@@ -26,8 +28,12 @@ server.use('/user',require("./user"))
 server.use('/book',require('./user'))
 server.use('/video',require('./video'))
 
+server.get("/", function(req,res){
+  res.sendFile(path.resolve(__dirname,"./build/index.html"))
+})
+
 server.listen(port, function(){
-  Mongoose.connect(dburl,function(error,client){
+  Mongoose.connect(dburlserver,function(error,client){
     if(error)
       console.log("Error connecting to database", error)
     else{
